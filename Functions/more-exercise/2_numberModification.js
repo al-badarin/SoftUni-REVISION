@@ -19,4 +19,4 @@ function numberMofification(num) {
 
 // Example usage:
 numberMofification(101); // Output: 1019
-// numberMofification(5835); // Output: 5835
+numberMofification(5835); // Output: 5835
