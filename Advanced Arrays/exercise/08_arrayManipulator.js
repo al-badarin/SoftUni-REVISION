@@ -17,7 +17,7 @@ function arrayManipulator(arr, commands) {
         break;
 
       case 'contains':
-        console.log(arr.indexOf(command.split(' ')[1]));
+        console.log(arr.indexOf(Number(command.split(' ')[1])));
         break;
 
       case 'remove':
