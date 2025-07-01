@@ -1,8 +1,8 @@
 function attachEventsListeners() {
-  let daysInputElement = document.getElementById('days');
-  let hoursInputElement = document.getElementById('hours');
-  let minutesInputElement = document.getElementById('minutes');
-  let secondsInputElement = document.getElementById('seconds');
+  let days = document.getElementById('days');
+  let hours = document.getElementById('hours');
+  let minutes = document.getElementById('minutes');
+  let seconds = document.getElementById('seconds');
 
   const rations = {
     days: 1,
