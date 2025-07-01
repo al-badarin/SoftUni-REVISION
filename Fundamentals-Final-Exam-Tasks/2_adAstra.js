@@ -1,8 +1,10 @@
 function foodTracker(input) {
+  const data = input[0];
+
   const pattern =
     /([#]|[|])(?<item>[A-Za-z\s]+)\1(?<date>[0-9]{2}\/[0-9]{2}\/[0-9]{2})\1(?<calories>[0-9]{1,5})\1/g;
 
-  const matches = [...input.matchAll(pattern)];
+  const matches = [...data.matchAll(pattern)];
 
   let totalCalories = 0;
   const items = [];
