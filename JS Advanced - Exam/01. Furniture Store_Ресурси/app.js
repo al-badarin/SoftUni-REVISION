@@ -46,4 +46,18 @@ function solve() {
       furnitureTrInfoElement.appendChild(furnitureTdPrice);
       furnitureTrInfoElement.appendChild(furnitureTdBtns);
 
+      let furnitureTrHideElement = document.createElement('tr');
+      furnitureTrHideElement.classList.add('hide');
+
+      let furnitureYearTdElement = document.createElement('td');
+      furnitureYearTdElement.textContent = year
+      furnitureTrHideElement.appendChild(furnitureYearTdElement);
+
+      let furnitureDescriptionTdElement = document.createElement('td');
+      furnitureDescriptionTdElement.colSpan = 3;
+      furnitureDescriptionTdElement.textContent = description
+      furnitureTrHideElement.appendChild(furnitureDescriptionTdElement);
+
+      furnitureList.appendChild(furnitureTrInfoElement);
+      furnitureList.appendChild(furnitureTrHideElement);
 }
