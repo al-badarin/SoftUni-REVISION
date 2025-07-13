@@ -21,55 +21,67 @@ function solve() {
     yearInputElement.value = '';
     priceInputElement.value = '';
 
-    if (model && description && year > 0 && price > 0) {
-      let furnitureTrInfoElement = document.createElement('tr');
-      furnitureTrInfoElement.classList.add('info');
+    if (!model || !description) return;
+    if (year <= 0 || price <= 0) return;
 
-      let furnitureTdName = document.createElement('td');
-      furnitureTdName.textContent = model;
+    let furnitureTrInfoElement = document.createElement('tr');
+    furnitureTrInfoElement.classList.add('info');
 
-      let furnitureTdPrice = document.createElement('td');
-      furnitureTdPrice.textContent = price;
+    let furnitureTdName = document.createElement('td');
+    furnitureTdName.textContent = model;
 
-      let furnitureTdBtns = document.createElement('td');
-      let moreInfoBtn = document.createElement('button');
-      moreInfoBtn.classList.add('moreBtn');
-      moreInfoBtn.textContent = 'More Info';
-      furnitureTdBtns.appendChild(moreInfoBtn);
+    let furnitureTdPrice = document.createElement('td');
+    furnitureTdPrice.textContent = price.toFixed(2);
 
-      let buyBtn = document.createElement('button');
-      buyBtn.classList.add('buyBtn');
-      buyBtn.textContent = 'Buy it';
-      furnitureTdBtns.appendChild(buyBtn);
+    let furnitureTdBtns = document.createElement('td');
+    let moreInfoBtn = document.createElement('button');
+    moreInfoBtn.classList.add('moreBtn');
+    moreInfoBtn.textContent = 'More Info';
+    furnitureTdBtns.appendChild(moreInfoBtn);
 
-      furnitureTrInfoElement.appendChild(furnitureTdName);
-      furnitureTrInfoElement.appendChild(furnitureTdPrice);
-      furnitureTrInfoElement.appendChild(furnitureTdBtns);
+    let buyBtn = document.createElement('button');
+    buyBtn.classList.add('buyBtn');
+    buyBtn.textContent = 'Buy it';
+    furnitureTdBtns.appendChild(buyBtn);
 
-      let furnitureTrHideElement = document.createElement('tr');
-      furnitureTrHideElement.classList.add('hide');
+    furnitureTrInfoElement.appendChild(furnitureTdName);
+    furnitureTrInfoElement.appendChild(furnitureTdPrice);
+    furnitureTrInfoElement.appendChild(furnitureTdBtns);
 
-      let furnitureYearTdElement = document.createElement('td');
-      furnitureYearTdElement.textContent = year
-      furnitureTrHideElement.appendChild(furnitureYearTdElement);
+    let furnitureTrHideElement = document.createElement('tr');
+    furnitureTrHideElement.classList.add('hide');
+    furnitureTrHideElement.style.display = 'none';
 
-      let furnitureDescriptionTdElement = document.createElement('td');
-      furnitureDescriptionTdElement.colSpan = 3;
-      furnitureDescriptionTdElement.textContent = description
-      furnitureTrHideElement.appendChild(furnitureDescriptionTdElement);
+    let furnitureYearTdElement = document.createElement('td');
+    furnitureYearTdElement.textContent = `Year: ${year}`;
+    furnitureTrHideElement.appendChild(furnitureYearTdElement);
 
-      furnitureList.appendChild(furnitureTrInfoElement);
-      furnitureList.appendChild(furnitureTrHideElement);
+    let furnitureDescriptionTdElement = document.createElement('td');
+    furnitureDescriptionTdElement.colSpan = 3;
+    furnitureDescriptionTdElement.textContent = `Description: ${description}`;
+    furnitureTrHideElement.appendChild(furnitureDescriptionTdElement);
 
-      moreInfoBtn.addEventListener('click', (e) => {
-        if (e.currentTarget.textContent == 'More Info') {
-          furnitureTrHideElement.style.display = 'contents';
-          e.currentTarget.textContent = 'Less Info';
-        } else {
-          furnitureTrHideElement.style.display = 'none';
-          e.currentTarget.textContent = 'More Info';
-        }
-      });
-    }
+    furnitureList.appendChild(furnitureTrInfoElement);
+    furnitureList.appendChild(furnitureTrHideElement);
+
+    moreInfoBtn.addEventListener('click', (e) => {
+      if (e.currentTarget.textContent == 'More Info') {
+        furnitureTrHideElement.style.display = 'contents';
+        e.currentTarget.textContent = 'Less Info';
+      } else {
+        furnitureTrHideElement.style.display = 'none';
+        e.currentTarget.textContent = 'More Info';
+      }
+    });
+
+    let totalPriceElement = document.querySelector('.total-price');
+    buyBtn.addEventListener('click', (e) => {
+      let currentTotalPrice = Number(totalPriceElement.textContent);
+      let totalPrice = currentTotalPrice + price;
+      totalPriceElement.textContent = totalPrice.toFixed(2);
+
+      furnitureTrInfoElement.remove();
+      furnitureTrHideElement.remove();
+    });
   });
 }
