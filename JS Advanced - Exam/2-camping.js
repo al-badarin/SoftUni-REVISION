@@ -24,7 +24,13 @@ class SummerCamp {
   }
 
   unregisterParticipant(name) {
-    //todo
+    if (!this.listOfParticipants.includes(name)) {
+      throw Error(`The ${name} is not registered in the camp.`);
+    }
+
+    let indexOfName = this.listOfParticipants.indexOf(name);
+    this.listOfParticipants.splice(indexOfName, 1);
+    return `The ${name} removed successfully.`;
   }
 
   timeToPlay(typeOfGame, participant1, participant2) {
