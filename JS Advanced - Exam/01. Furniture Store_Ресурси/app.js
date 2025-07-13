@@ -60,4 +60,16 @@ function solve() {
 
       furnitureList.appendChild(furnitureTrInfoElement);
       furnitureList.appendChild(furnitureTrHideElement);
+
+      moreInfoBtn.addEventListener('click', (e) => {
+        if (e.currentTarget.textContent == 'More Info') {
+          furnitureTrHideElement.style.display = 'contents';
+          e.currentTarget.textContent = 'Less Info';
+        } else {
+          furnitureTrHideElement.style.display = 'none';
+          e.currentTarget.textContent = 'More Info';
+        }
+      });
+    }
+  });
 }
