@@ -8,10 +8,10 @@ class SummerCamp {
 
   registerParticipant(name, condition, money) {
     if (!this.priceForTheCamp[condition]) {
-      throw new Error('Unsuccessful registration at the camp.');
+      throw Error('Unsuccessful registration at the camp.');
     }
 
-    if (this.listOfParticipants.includes(name)) {
+    if (this.listOfParticipants.find((p) => p.name === name)) {
       return `The ${name} is already registered at the camp.`;
     }
 
@@ -24,21 +24,65 @@ class SummerCamp {
   }
 
   unregisterParticipant(name) {
-    if (!this.listOfParticipants.includes(name)) {
+    if (!participant) {
       throw Error(`The ${name} is not registered in the camp.`);
     }
 
-    let indexOfName = this.listOfParticipants.indexOf(name);
-    this.listOfParticipants.splice(indexOfName, 1);
+    this.listOfParticipants = this.listOfParticipants.filter(
+      (p) => p.name !== name
+    );
     return `The ${name} removed successfully.`;
   }
 
   timeToPlay(typeOfGame, participant1, participant2) {
-    //todo
+    let player1 = this.listOfParticipants.find((x) => x.name == participant1);
+
+    if (!player1) {
+      throw Error(`Invalid entered name/s.`);
+    }
+
+    if (typeOfGame == 'Battleship') {
+      player1.power += 20;
+      return `The ${player1.name} successfully completed the game ${typeOfGame}.`;
+    } else if (typeOfGame == 'WaterBalloonFights') {
+      let nameOfWinner = '';
+      let player2 = this.listOfParticipants.find((x) => x.name == participant2);
+
+      if (!player2) {
+        throw Error(`Invalid entered name/s.`);
+      }
+
+      if (player1.condition != player2.condition) {
+        throw Error(`Choose players with equal condition.`);
+      }
+
+      if (player1.power > player2.power) {
+        player1.wins++;
+        nameOfWinner = player1.name;
+      } else if (player2.power > player1.power) {
+        player2.wins++;
+        nameOfWinner = player2.name;
+      } else {
+        return `There is no winner.`;
+      }
+
+      return `The ${nameOfWinner} is winner in the game ${typeOfGame}.`;
+    }
   }
 
   toString() {
-    //todo
+    const result = [];
+    result.push(
+      `${this.organizer} will take ${this.listOfParticipants.length} participants on camping to ${this.location}`
+    );
+
+    this.listOfParticipants
+      .sort((a, b) => b.wins - a.wins)
+      .forEach((p) => {
+        result.push(`${p.name} - ${p.condition} - ${p.power} - ${p.wins}`);
+      });
+
+    return result.join('\n');
   }
 }
 
