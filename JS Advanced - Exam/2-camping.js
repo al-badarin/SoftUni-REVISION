@@ -24,6 +24,7 @@ class SummerCamp {
   }
 
   unregisterParticipant(name) {
+    let participant = this.listOfParticipants.find((p) => p.name === name);
     if (!participant) {
       throw Error(`The ${name} is not registered in the camp.`);
     }
