@@ -5,33 +5,49 @@ function userFetcher() {
   const getUserBtn = document.getElementById('getUser');
   const resultDiv = document.getElementById('result');
 
-  getUserBtn.addEventListener('click', () => {
-    clearElement(resultDiv);
+  let debounceTimer = null;
 
-    const id = Number(userIdInput.value);
-    if (!Number.isInteger(id) || id < 1 || id > 10) {
-      resultDiv.textContent = 'Please enter a number between 1 and 10.';
-      return;
-    }
+  getUserBtn.addEventListener(
+    'click',
+    () => {
+      clearTimeout(debounceTimer);
+      debounceTimer = setTimeout(() => {
+        clearElement(resultDiv);
 
-    fetch(`${baseUrl}/${userIdInput.value}`)
-      .then((res) => {
-        if (!res.ok) {
-          throw new Error('Invalid user id!');
+        // Input validation
+        const id = Number(userIdInput.value);
+        if (!Number.isInteger(id) || id < 1 || id > 10) {
+          resultDiv.textContent = 'Please enter a number between 1 and 10.';
+          return;
         }
-        return res.json();
-      })
-      .then((userData) => {
-        resultDiv.appendChild(createListElement(userData.name));
-        resultDiv.appendChild(createListElement(userData.username));
-        resultDiv.appendChild(createListElement(userData.email));
-      })
-      .catch(() => {
-        resultDiv.textContent = 'Error: User not found.';
-      });
 
-    userIdInput.value = '';
-  });
+        // Loading spinner
+        const loading = document.createElement('p');
+        loading.textContent = 'Loading...';
+        resultDiv.appendChild(loading);
+
+        fetch(`${baseUrl}/${id}`)
+          .then((res) => {
+            if (!res.ok) throw new Error();
+            return res.json();
+          })
+          .then((userData) => {
+            clearElement(resultDiv);
+            resultDiv.appendChild(createListElement(`Name: ${userData.name}`));
+            resultDiv.appendChild(
+              createListElement(`Username: ${userData.username}`)
+            );
+            resultDiv.appendChild(createListElement(`Email: ${userData.email}`));
+            userIdInput.value = '';
+          })
+          .catch(() => {
+            clearElement(resultDiv);
+            resultDiv.textContent = 'Error: User not found.';
+          });
+      });
+    },
+    400
+  );
 }
 
 function createListElement(text) {
