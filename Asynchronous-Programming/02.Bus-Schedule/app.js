@@ -29,7 +29,9 @@ function solve() {
   }
 
   function arrive() {
-    console.log('Arrive TODO...');
+    infoBox.textContent = `Arriving at ${nextStopName}`;
+    departBtn.disabled = false;
+    arriveBtn.disabled = true;
   }
 
   return {
