@@ -1,17 +1,41 @@
 function solve() {
+  const infoBox = document.querySelector('#info');
+  const departBtn = document.querySelector('#depart');
+  const arriveBtn = document.querySelector('#arrive');
 
-    function depart() {
-        console.log('Depart TODO...');
-    }
+  let currentStopId = 'depot';
+  let nextStopName = '';
 
-    function arrive() {
-        console.log('Arrive TODO...');
-    }
+  function depart() {
+    fetch(`http://localhost:3030/jsonstore/bus/schedule/${currentStopId}`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Invalid stop');
+        }
+        return res.json();
+      })
+      .then((data) => {
+        nextStopName = data.name;
+        currentStopId = data.next;
+        infoBox.textContent = `Next stop ${nextStopName}`;
+        departBtn.disabled = true;
+        arriveBtn.disabled = false;
+      })
+      .catch((error) => {
+        infoBox.textContent = 'Error';
+        departBtn.disabled = true;
+        arriveBtn.disabled = true;
+      });
+  }
 
-    return {
-        depart,
-        arrive
-    };
+  function arrive() {
+    console.log('Arrive TODO...');
+  }
+
+  return {
+    depart,
+    arrive,
+  };
 }
 
 let result = solve();
