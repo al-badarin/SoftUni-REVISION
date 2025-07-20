@@ -6,8 +6,6 @@ function userFetcher() {
   const resultDiv = document.getElementById('result');
 
   getUserBtn.addEventListener('click', () => {
-    resultDiv.innerHTML = '';
-
     const id = Number(userIdInput.value);
     if (!Number.isInteger(id) || id < 1 || id > 10) {
       resultDiv.textContent = 'Please enter a number between 1 and 10.';
@@ -22,25 +20,23 @@ function userFetcher() {
         return res.json();
       })
       .then((userData) => {
-        const name = document.createElement('li');
-        name.textContent = userData.name;
-
-        const userName = document.createElement('li');
-        userName.textContent = userData.username;
-
-        const email = document.createElement('li');
-        email.textContent = userData.email;
-
-        resultDiv.appendChild(name);
-        resultDiv.appendChild(userName);
-        resultDiv.appendChild(email);
+        resultDiv.appendChild(createListElement(userData.name));
+        resultDiv.appendChild(createListElement(userData.username));
+        resultDiv.appendChild(createListElement(userData.email));
       })
       .catch(() => {
         resultDiv.textContent = 'Error';
       });
 
+    resultDiv.innerHTML = '';
     userIdInput.value = '';
   });
+}
+
+function createListElement(text) {
+  const li = document.createElement('li');
+  li.textContent = text;
+  return li;
 }
 
 userFetcher();
