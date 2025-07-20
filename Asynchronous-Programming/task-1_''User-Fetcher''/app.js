@@ -28,7 +28,7 @@ function userFetcher() {
         resultDiv.textContent = 'Error';
       });
 
-    resultDiv.innerHTML = '';
+    while (resultDiv.firstChild) resultDiv.removeChild(resultDiv.firstChild);
     userIdInput.value = '';
   });
 }
