@@ -1,0 +1,22 @@
+body {
+  font-family: sans-serif;
+  padding: 30px;
+}
+
+#app {
+  max-width: 600px;
+  margin: auto;
+}
+
+select,
+button {
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+}
+
+#postDisplay {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ccc;
+}
