@@ -18,14 +18,31 @@ function postExplorer() {
           postOption.textContent = post.title;
           postDropdown.appendChild(postOption);
         });
-      });
+      })
+      .catch(console.error());
   }
 
   loadPostTitles();
 
   viewBtn.addEventListener('click', () => {
     const postId = Number(postDropdown.value);
-    console.log('Selected post ID:', postId);
+
+    fetch(`${baseUrl}/${postId}`)
+      .then((res) => {
+        if (!res.ok) throw new Error();
+        return res.json();
+      })
+      .then((postData) => {
+        const postTitle = document.createElement('h3');
+        postTitle.textContent = postData.title;
+
+        const postBody = document.createElement('p');
+        postBody.textContent = postData.body;
+
+        postDisplay.appendChild(postTitle);
+        postDisplay.appendChild(postBody);
+      })
+      .catch(console.error());
   });
 }
 
